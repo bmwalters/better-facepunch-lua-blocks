@@ -55,6 +55,8 @@ for (let pre of document.querySelectorAll("pre.bbcode_code")) {
     navLink.addEventListener("click", navLinkClicked)
   }
 
+  pre.parentElement.replaceChild(container, pre)
+
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='lua']"), {
     value: pre.innerText
   })
@@ -62,6 +64,4 @@ for (let pre of document.querySelectorAll("pre.bbcode_code")) {
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
     value: "-- TODO"
   })
-
-  pre.parentElement.replaceChild(container, pre)
 }
