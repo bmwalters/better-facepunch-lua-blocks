@@ -1,12 +1,4 @@
-console.log("[FPCM] page loaded")
-
-CodeMirror.defaults.mode = "lua"
-CodeMirror.defaults.lint = true
-CodeMirror.defaults.lineNumbers = true
-CodeMirror.defaults.theme = "monokai"
-CodeMirror.defaults.gutters = ["CodeMirror-lint-markers"]
-
-for (let pre of document.querySelectorAll("pre.bbcode_code")) {
+let replacePreWithCodeMirror = function(pre) {
   let container = document.createElement("div")
   container.innerHTML = `
     <div class="fpcm-nav">
@@ -64,4 +56,20 @@ for (let pre of document.querySelectorAll("pre.bbcode_code")) {
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
     value: "-- TODO"
   })
+}
+
+let currentForumSection = document.querySelectorAll(".navbit")[1].innerText
+
+if (currentForumSection === "> Garry's Mod") {
+  console.log("[FPCM] loaded")
+
+  CodeMirror.defaults.mode = "lua"
+  CodeMirror.defaults.lint = true
+  CodeMirror.defaults.lineNumbers = true
+  CodeMirror.defaults.theme = "monokai"
+  CodeMirror.defaults.gutters = ["CodeMirror-lint-markers"]
+
+  for (let pre of document.querySelectorAll("pre.bbcode_code")) {
+    replacePreWithCodeMirror(pre)
+  }
 }
