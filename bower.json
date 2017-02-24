@@ -1,0 +1,12 @@
+{
+  "name": "FP-CodeMirror",
+  "private": true,
+  "dependencies": {
+    "codemirror": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/codemirror.min.js",
+    "codemirror-mode-lua": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/mode/lua/lua.min.js",
+    "codemirror-addon-lint": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/addon/lint/lint.min.js",
+    "codemirror-css": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/codemirror.min.css",
+    "codemirror-addon-lint-css": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/addon/lint/lint.css",
+    "codemirror-theme-monokai": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/theme/monokai.min.css"
+  }
+}

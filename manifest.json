@@ -1,0 +1,28 @@
+{
+	"manifest_version": 2,
+	"name": "FP CodeMirrorer",
+	"short_name": "FPCM",
+	"version": "1.0.0",
+	"description": "Does things and stuff",
+	"icons": {},
+	"content_scripts": [
+		{
+			"matches": ["https://facepunch.com/showthread.php*"],
+			"js": [
+        "bower_components/codemirror/index.js",
+        "bower_components/codemirror-addon-lint/index.js",
+        "bower_components/codemirror-mode-lua/index.js",
+        "script.js"
+      ],
+      "css": [
+        "bower_components/codemirror-css/index.css",
+        "bower_components/codemirror-addon-lint-css/index.css",
+        "bower_components/codemirror-theme-monokai/index.css",
+        "style.css"
+      ]
+		}
+	],
+	"permissions": [
+		"https://facepunch.com/showthread.php*"
+	]
+}

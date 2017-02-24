@@ -1,0 +1,51 @@
+.fpcm-nav {
+  background: #333334;
+  font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.fpcm-nav ul {
+  margin: 0 !important;
+  padding: 0;
+  list-style: none;
+}
+
+.fpcm-nav li {
+  display: inline-block;
+}
+
+.fpcm-nav a {
+  text-decoration: none !important;
+  color: #e4e3e5 !important;
+  display: inline-block;
+  position: relative;
+  padding: 8px 16px 8px;
+}
+
+.fpcm-nav a.active {
+  background: #1d1d1d;
+  color: #f8f8f2 !important;
+}
+
+.fpcm-output {
+  height: 256px;
+}
+
+.code-box {
+  height: 100%;
+}
+
+.code-box:not(.active) {
+  display: none;
+}
+
+.CodeMirror {
+  height: 100%;
+  font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
+  font-size: 14px;
+}
+
+.CodeMirror pre {
+  margin-bottom: 0 !important; /* override FP style */
+}
