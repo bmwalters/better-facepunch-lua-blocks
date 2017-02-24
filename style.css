@@ -32,20 +32,20 @@
   height: 256px;
 }
 
-.code-box {
+.fpcm-code-box {
   height: 100%;
 }
 
-.code-box:not(.active) {
+.fpcm-code-box:not(.active) {
   display: none;
 }
 
-.CodeMirror {
+.fpcm-code-box .CodeMirror {
   height: 100%;
   font-family: 'Source Code Pro', Menlo, Consolas, Monaco, monospace;
   font-size: 14px;
 }
 
-.CodeMirror pre {
-  margin-bottom: 0 !important; /* override FP style */
+.fpcm-code-box .CodeMirror pre {
+  margin-bottom: 0; /* override FP style */
 }

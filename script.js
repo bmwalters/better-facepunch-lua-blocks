@@ -16,13 +16,13 @@ for (let pre of document.querySelectorAll("pre.bbcode_code")) {
       </ul>
     </div>
     <div class="fpcm-output">
-      <div data-box-id="lua" class="code-box active"></div>
-      <div data-box-id="repl" class="code-box"></div>
+      <div data-box-id="lua" class="fpcm-code-box active"></div>
+      <div data-box-id="repl" class="fpcm-code-box"></div>
     </div>
   `
 
   let activeLink = container.querySelector(".nav-link.active")
-  let activeCodeBox = container.querySelector(".code-box.active")
+  let activeCodeBox = container.querySelector(".fpcm-code-box.active")
 
   let navLinkClicked = function(e) {
     if (activeLink) {
@@ -55,11 +55,11 @@ for (let pre of document.querySelectorAll("pre.bbcode_code")) {
     navLink.addEventListener("click", navLinkClicked)
   }
 
-  CodeMirror(container.querySelector(".code-box[data-box-id='lua']"), {
+  CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='lua']"), {
     value: pre.innerText
   })
 
-  CodeMirror(container.querySelector(".code-box[data-box-id='repl']"), {
+  CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
     value: "-- TODO"
   })
 
