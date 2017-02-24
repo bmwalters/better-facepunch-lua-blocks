@@ -1,7 +1,8 @@
 # FP-CodeMirror
 Does things and stuff
 
-## TODO
-- Lua Linter
-- Lua VM/REPL (with GLua API)
-- GMod wiki support
+## Screenshot
+Before:
+![](https://github.com/bmwalters/facepunch-glua-codemirror/wiki/images/fp-post-before.png)
+After:
+![](https://github.com/bmwalters/facepunch-glua-codemirror/wiki/images/fp-post-after.png)
