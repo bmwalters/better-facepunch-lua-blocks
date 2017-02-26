@@ -1,6 +1,8 @@
 # Better Facepunch Lua Blocks
 Improves the Lua code blocks on the Facepunch Garry's Mod Lua subforum with new features like editing, linting, and more!
 
+Available on the [Chrome](https://chrome.google.com/webstore/detail/better-facepunch-lua-bloc/ehobflckbaehomegofklbejikboechon) and Firefox (coming soon) addon marketplaces.
+
 ## Screenshot
 Before:
 ![](https://github.com/bmwalters/facepunch-glua-codemirror/wiki/images/fp-post-before.png)
