@@ -4,7 +4,12 @@
   "short_name": "Better FP Lua",
   "version": "0.1.0",
   "description": "Improves the Lua code blocks on the Facepunch Garry's Mod Lua subforum with new features like editing, linting, and more!",
-  "icons": {},
+  "author": "Zerf",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
   "content_scripts": [
     {
       "matches": ["https://facepunch.com/showthread.php*"],
