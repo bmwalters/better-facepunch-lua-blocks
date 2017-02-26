@@ -1,14 +1,14 @@
 {
-	"manifest_version": 2,
-	"name": "FP CodeMirrorer",
-	"short_name": "FPCM",
-	"version": "1.0.0",
-	"description": "Does things and stuff",
-	"icons": {},
-	"content_scripts": [
-		{
-			"matches": ["https://facepunch.com/showthread.php*"],
-			"js": [
+  "manifest_version": 2,
+  "name": "Better Facepunch Lua Blocks",
+  "short_name": "Better FP Lua",
+  "version": "0.1.0",
+  "description": "Improves the Lua code blocks on the Facepunch Garry's Mod Lua subforum with new features like editing, linting, and more!",
+  "icons": {},
+  "content_scripts": [
+    {
+      "matches": ["https://facepunch.com/showthread.php*"],
+      "js": [
         "bower_components/codemirror/index.js",
         "bower_components/codemirror-addon-lint/index.js",
         "bower_components/codemirror-mode-lua/index.js",
@@ -21,9 +21,9 @@
         "bower_components/codemirror-theme-monokai/index.css",
         "style.css"
       ]
-		}
-	],
-	"permissions": [
-		"https://facepunch.com/showthread.php*"
-	]
+    }
+  ],
+  "permissions": [
+    "https://facepunch.com/showthread.php*"
+  ]
 }

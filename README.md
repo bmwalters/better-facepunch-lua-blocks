@@ -1,5 +1,5 @@
-# FP-CodeMirror
-Does things and stuff
+# Better Facepunch Lua Blocks
+Improves the Lua code blocks on the Facepunch Garry's Mod Lua subforum with new features like editing, linting, and more!
 
 ## Screenshot
 Before:
@@ -7,7 +7,7 @@ Before:
 After:
 ![](https://github.com/bmwalters/facepunch-glua-codemirror/wiki/images/fp-post-after.png)
 
-## Setup
+## Development Setup
 1. Clone the project and enter its directory
 2. Ensure `bower` is installed (`yarn global add bower` or `npm install -g bower`)
 3. Install dependencies with `bower install`
