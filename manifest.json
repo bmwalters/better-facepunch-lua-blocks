@@ -12,6 +12,7 @@
         "bower_components/codemirror/index.js",
         "bower_components/codemirror-addon-lint/index.js",
         "bower_components/codemirror-mode-lua/index.js",
+        "bower_components/glualint-lib/compiled.js",
         "script.js"
       ],
       "css": [
