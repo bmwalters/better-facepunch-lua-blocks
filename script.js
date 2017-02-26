@@ -49,9 +49,14 @@ let replacePreWithCodeMirror = function(pre) {
 
   pre.parentElement.replaceChild(container, pre)
 
-  CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='lua']"), {
+  let luaMirror = CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='lua']"), {
     value: pre.innerText
   })
+
+  // lint the view after we register the lint function
+  setTimeout(() => {
+    luaMirror.performLint()
+  }, 0)
 
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
     value: "-- TODO"
@@ -68,6 +73,26 @@ if (currentForumSection === "> Garry's Mod") {
   CodeMirror.defaults.lineNumbers = true
   CodeMirror.defaults.theme = "monokai"
   CodeMirror.defaults.gutters = ["CodeMirror-lint-markers"]
+
+  // gluaLintString is not registered for a frame
+  setTimeout(() => {
+    CodeMirror.registerHelper("lint", "lua", (code, options, editor) => {
+      let result = gluaLintString(code)
+
+      if (result == "good") {
+        return []
+      } else {
+        return result.map((o) => {
+          return {
+            message: o.msg,
+            severity: o.type,
+            from: CodeMirror.Pos(o.startLine, o.startPos),
+            to: CodeMirror.Pos(o.endLine, o.endPos)
+          }
+        })
+      }
+    })
+  }, 0)
 
   for (let pre of document.querySelectorAll("pre.bbcode_code")) {
     replacePreWithCodeMirror(pre)
