@@ -1,3 +1,26 @@
+let asyncLintString = (function() {
+  let resolvers = []
+
+  let worker = new Worker(chrome.runtime.getURL("lint_worker.js"))
+
+  worker.onmessage = (e) => {
+    if (resolvers[e.data.id]) {
+      resolvers[e.data.id](e.data.result)
+    }
+    delete resolvers[e.data.id]
+  }
+
+  return function(code) {
+    return new Promise((resolve, reject) => {
+      resolvers.push(resolve)
+      worker.postMessage({
+        id: resolvers.length - 1,
+        code: code
+      })
+    })
+  }
+}())
+
 let replacePreWithCodeMirror = function(pre) {
   let container = document.createElement("div")
   container.innerHTML = `
@@ -66,6 +89,26 @@ let replacePreWithCodeMirror = function(pre) {
   })
 }
 
+let lintFunc = (code, callback, options, editor) => {
+  asyncLintString(code)
+  .then((result) => {
+    if (result == "good") {
+      return callback([])
+    } else {
+      return callback(result.map((o) => {
+        return {
+          message: o.msg,
+          severity: o.type,
+          from: CodeMirror.Pos(o.startLine, o.startPos),
+          to: CodeMirror.Pos(o.endLine, o.endPos)
+        }
+      }))
+    }
+  })
+}
+
+lintFunc.async = true
+
 let currentForumSection = document.querySelectorAll(".navbit")[1].innerText
 
 if (currentForumSection === "> Garry's Mod") {
@@ -79,22 +122,7 @@ if (currentForumSection === "> Garry's Mod") {
 
   // gluaLintString is not registered for a frame
   setTimeout(() => {
-    CodeMirror.registerHelper("lint", "lua", (code, options, editor) => {
-      let result = gluaLintString(code)
-
-      if (result == "good") {
-        return []
-      } else {
-        return result.map((o) => {
-          return {
-            message: o.msg,
-            severity: o.type,
-            from: CodeMirror.Pos(o.startLine, o.startPos),
-            to: CodeMirror.Pos(o.endLine, o.endPos)
-          }
-        })
-      }
-    })
+    CodeMirror.registerHelper("lint", "lua", lintFunc)
   }, 0)
 
   for (let pre of document.querySelectorAll("pre.bbcode_code")) {

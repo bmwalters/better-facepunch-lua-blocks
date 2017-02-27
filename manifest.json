@@ -18,6 +18,7 @@
         "bower_components/codemirror-addon-lint/index.js",
         "bower_components/codemirror-mode-lua/index.js",
         "bower_components/glualint-lib/compiled.js",
+        "worker_proxy.js",
         "script.js"
       ],
       "css": [
@@ -30,5 +31,15 @@
   ],
   "permissions": [
     "https://facepunch.com/showthread.php*"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "worker_proxy.js",
+      "bower_components/glualint-lib/compiled.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "worker_proxy.html"
   ]
 }
