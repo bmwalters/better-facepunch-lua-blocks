@@ -1,24 +1,38 @@
-let asyncLintString = (function() {
+let gluaWorker = (function() {
   let resolvers = []
 
-  let worker = new Worker(chrome.runtime.getURL("lint_worker.js"))
+  let worker = new Worker(chrome.runtime.getURL("glua_worker.js"))
 
-  worker.onmessage = (e) => {
+  worker.onmessage = function(e) {
     if (resolvers[e.data.id]) {
       resolvers[e.data.id](e.data.result)
+      delete resolvers[e.data.id]
     }
-    delete resolvers[e.data.id]
   }
 
-  return function(code) {
+  worker.lintString = function(code) {
     return new Promise((resolve, reject) => {
       resolvers.push(resolve)
       worker.postMessage({
         id: resolvers.length - 1,
+        action: "lint",
         code: code
       })
     })
   }
+
+  worker.prettyPrintString = function(code) {
+    return new Promise((resolve, reject) => {
+      resolvers.push(resolve)
+      worker.postMessage({
+        id: resolvers.length - 1,
+        action: "prettyPrint",
+        code: code
+      })
+    })
+  }
+
+  return worker
 }())
 
 let replacePreWithCodeMirror = function(pre) {
@@ -81,7 +95,10 @@ let replacePreWithCodeMirror = function(pre) {
   }, 0)
 
   container.querySelector(".fpcm-prettify-button").addEventListener("click", (e) => {
-    luaMirror.setValue(gluaPrettyPrintString(luaMirror.getValue()))
+    gluaWorker.prettyPrintString(luaMirror.getValue())
+    .then((prettyPrinted) => {
+      luaMirror.setValue(prettyPrinted)
+    })
   })
 
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
@@ -90,7 +107,7 @@ let replacePreWithCodeMirror = function(pre) {
 }
 
 let lintFunc = (code, callback, options, editor) => {
-  asyncLintString(code)
+  gluaWorker.lintString(code)
   .then((result) => {
     if (result == "good") {
       return callback([])
