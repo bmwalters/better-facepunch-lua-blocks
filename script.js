@@ -2,10 +2,9 @@ let replacePreWithCodeMirror = function(pre) {
   let container = document.createElement("div")
   container.innerHTML = `
     <div class="fpcm-nav">
-      <ul>
-        <li><a data-link-id="lua" href="javascript:;" class="nav-link active">Lua</a></li>
-        <li><a data-link-id="repl" href="javascript:;" class="nav-link">Run</a></li>
-      </ul>
+      <a data-link-id="lua" href="javascript:;" class="fpcm-nav-link active">Lua</a>
+      <a data-link-id="repl" href="javascript:;" class="fpcm-nav-link">Run</a>
+      <a href="javascript:;" class="fpcm-prettify-button fpcm-nav-right">Pretty Print</a>
     </div>
     <div class="fpcm-output">
       <div data-box-id="lua" class="fpcm-code-box active"></div>
@@ -13,7 +12,7 @@ let replacePreWithCodeMirror = function(pre) {
     </div>
   `
 
-  let activeLink = container.querySelector(".nav-link.active")
+  let activeLink = container.querySelector(".fpcm-nav-link.active")
   let activeCodeBox = container.querySelector(".fpcm-code-box.active")
 
   let navLinkClicked = function(e) {
@@ -43,7 +42,7 @@ let replacePreWithCodeMirror = function(pre) {
     activeCodeBox = codeBox
   }
 
-  for (let navLink of container.querySelectorAll(".nav-link")) {
+  for (let navLink of container.querySelectorAll(".fpcm-nav-link")) {
     navLink.addEventListener("click", navLinkClicked)
   }
 
@@ -57,6 +56,10 @@ let replacePreWithCodeMirror = function(pre) {
   setTimeout(() => {
     luaMirror.performLint()
   }, 0)
+
+  container.querySelector(".fpcm-prettify-button").addEventListener("click", (e) => {
+    luaMirror.setValue(gluaPrettyPrintString(luaMirror.getValue()))
+  })
 
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
     value: "-- TODO"

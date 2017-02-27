@@ -3,29 +3,23 @@
   font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
   font-size: 13px;
   line-height: 1.4;
-}
-
-.fpcm-nav ul {
-  margin: 0 !important;
-  padding: 0;
-  list-style: none;
-}
-
-.fpcm-nav li {
-  display: inline-block;
+  clear: both;
 }
 
 .fpcm-nav a {
+  display: inline-block;
   text-decoration: none !important;
   color: #e4e3e5 !important;
-  display: inline-block;
-  position: relative;
   padding: 8px 16px 8px;
 }
 
 .fpcm-nav a.active {
   background: #1d1d1d;
   color: #f8f8f2 !important;
+}
+
+.fpcm-nav .fpcm-nav-right {
+  float: right;
 }
 
 .fpcm-output {
