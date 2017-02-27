@@ -1,5 +1,5 @@
 {
-  "name": "FP-CodeMirror",
+  "name": "better-facepunch-lua-blocks",
   "private": true,
   "dependencies": {
     "codemirror": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/codemirror.min.js",
@@ -8,6 +8,6 @@
     "codemirror-css": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/codemirror.min.css",
     "codemirror-addon-lint-css": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/addon/lint/lint.css",
     "codemirror-theme-monokai": "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.24.2/theme/monokai.min.css",
-    "glualint-lib": "bmwalters/glualint-lib#dist"
+    "glualint-lib": "bmwalters/glualint-lib#0e04d161fd8a67247c7dcc3c34b3410c1428cb6c"
   }
 }
