@@ -6,9 +6,10 @@
   "description": "Improves the Lua code blocks on the Facepunch Garry's Mod Lua subforum with new features like editing, linting, and more!",
   "author": "Zerf",
   "icons": {
-    "16": "icons/16.png",
-    "48": "icons/48.png",
-    "128": "icons/128.png"
+    "16": "icons/raw/fplua.svg",
+    "48": "icons/raw/fplua.svg",
+    "96": "icons/raw/fplua.svg",
+    "128": "icons/raw/fplua.svg"
   },
   "content_scripts": [
     {
@@ -17,7 +18,6 @@
         "bower_components/codemirror/index.js",
         "bower_components/codemirror-addon-lint/index.js",
         "bower_components/codemirror-mode-lua/index.js",
-        "worker_proxy_content.js",
         "script.js"
       ],
       "css": [
@@ -31,14 +31,7 @@
   "permissions": [
     "https://facepunch.com/showthread.php*"
   ],
-  "background": {
-    "persistent": false,
-    "scripts": [
-      "worker_proxy_background.js",
-      "bower_components/glualint-lib/compiled.js"
-    ]
-  },
   "web_accessible_resources": [
-    "worker_proxy.html"
+    "glua_worker.js"
   ]
 }

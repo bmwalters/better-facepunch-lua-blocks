@@ -1,3 +1,40 @@
+let gluaWorker = (function() {
+  let resolvers = []
+
+  let worker = new Worker(chrome.runtime.getURL("glua_worker.js"))
+
+  worker.onmessage = function(e) {
+    if (resolvers[e.data.id]) {
+      resolvers[e.data.id](e.data.result)
+      delete resolvers[e.data.id]
+    }
+  }
+
+  worker.lintString = function(code) {
+    return new Promise((resolve, reject) => {
+      resolvers.push(resolve)
+      worker.postMessage({
+        id: resolvers.length - 1,
+        action: "lint",
+        code: code
+      })
+    })
+  }
+
+  worker.prettyPrintString = function(code) {
+    return new Promise((resolve, reject) => {
+      resolvers.push(resolve)
+      worker.postMessage({
+        id: resolvers.length - 1,
+        action: "prettyPrint",
+        code: code
+      })
+    })
+  }
+
+  return worker
+}())
+
 let replacePreWithCodeMirror = function(pre) {
   let container = document.createElement("div")
   container.innerHTML = `
@@ -58,13 +95,36 @@ let replacePreWithCodeMirror = function(pre) {
   }, 0)
 
   container.querySelector(".fpcm-prettify-button").addEventListener("click", (e) => {
-    luaMirror.setValue(gluaPrettyPrintString(luaMirror.getValue()))
+    gluaWorker.prettyPrintString(luaMirror.getValue())
+    .then((prettyPrinted) => {
+      luaMirror.setValue(prettyPrinted)
+    })
   })
 
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
     value: "-- TODO"
   })
 }
+
+let lintFunc = (code, callback, options, editor) => {
+  gluaWorker.lintString(code)
+  .then((result) => {
+    if (result == "good") {
+      return callback([])
+    } else {
+      return callback(result.map((o) => {
+        return {
+          message: o.msg,
+          severity: o.type,
+          from: CodeMirror.Pos(o.startLine, o.startPos),
+          to: CodeMirror.Pos(o.endLine, o.endPos)
+        }
+      }))
+    }
+  })
+}
+
+lintFunc.async = true
 
 let currentForumSection = document.querySelectorAll(".navbit")[1].innerText
 
@@ -79,22 +139,7 @@ if (currentForumSection === "> Garry's Mod") {
 
   // gluaLintString is not registered for a frame
   setTimeout(() => {
-    CodeMirror.registerHelper("lint", "lua", (code, options, editor) => {
-      let result = gluaLintString(code)
-
-      if (result == "good") {
-        return []
-      } else {
-        return result.map((o) => {
-          return {
-            message: o.msg,
-            severity: o.type,
-            from: CodeMirror.Pos(o.startLine, o.startPos),
-            to: CodeMirror.Pos(o.endLine, o.endPos)
-          }
-        })
-      }
-    })
+    CodeMirror.registerHelper("lint", "lua", lintFunc)
   }, 0)
 
   for (let pre of document.querySelectorAll("pre.bbcode_code")) {
