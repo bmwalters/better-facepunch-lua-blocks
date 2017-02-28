@@ -37,6 +37,7 @@ let gluaWorker = (function() {
 
 let replacePreWithCodeMirror = function(pre) {
   let container = document.createElement("div")
+  container.classList.add("fpcm-container")
   container.innerHTML = `
     <div class="fpcm-nav">
       <a data-link-id="lua" href="javascript:;" class="fpcm-nav-link active">Lua</a>
@@ -47,6 +48,7 @@ let replacePreWithCodeMirror = function(pre) {
       <div data-box-id="lua" class="fpcm-code-box active"></div>
       <div data-box-id="repl" class="fpcm-code-box"></div>
     </div>
+    <div class="fpcm-resize-grabber">⋯</div>
   `
 
   let activeLink = container.querySelector(".fpcm-nav-link.active")
@@ -85,7 +87,9 @@ let replacePreWithCodeMirror = function(pre) {
 
   pre.parentElement.replaceChild(container, pre)
 
-  let luaMirror = CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='lua']"), {
+  let luaBox = container.querySelector(".fpcm-code-box[data-box-id='lua']")
+
+  let luaMirror = CodeMirror(luaBox, {
     value: pre.innerText
   })
 
@@ -99,6 +103,51 @@ let replacePreWithCodeMirror = function(pre) {
     .then((prettyPrinted) => {
       luaMirror.setValue(prettyPrinted)
     })
+  })
+
+  let grabber = container.querySelector(".fpcm-resize-grabber")
+
+  let isPointerDown = false
+
+  grabber.addEventListener("mousedown", (mouseDownEvent) => {
+    if (isPointerDown) { return }
+
+    let initialOutputHeight
+
+    let outputContainer = container.querySelector(".fpcm-output")
+
+    isPointerDown = true
+
+    let isDragging = false
+
+    mouseDownEvent.preventDefault()
+
+    let mouseMoveHandler = (e) => {
+      let movedY = e.pageY - mouseDownEvent.pageY
+
+      if (!isDragging && (Math.abs(movedY) > 3)) {
+        isDragging = true
+        initialOutputHeight = outputContainer.offsetHeight
+      }
+
+      if (isDragging) {
+        e.preventDefault()
+        outputContainer.style.height = `${initialOutputHeight + movedY}px`
+      }
+    }
+
+    let mouseUpHandler = () => {
+      isPointerDown = false
+      isDragging = false
+
+      window.removeEventListener("mousemove", mouseMoveHandler)
+      window.removeEventListener("mouseup", mouseUpHandler)
+
+      luaMirror.refresh()
+    }
+
+    window.addEventListener("mousemove", mouseMoveHandler)
+    window.addEventListener("mouseup", mouseUpHandler)
   })
 
   CodeMirror(container.querySelector(".fpcm-code-box[data-box-id='repl']"), {
