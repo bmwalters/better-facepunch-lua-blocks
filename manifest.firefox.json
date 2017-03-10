@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Better Facepunch Lua Blocks",
   "short_name": "Better FP Lua",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Improves the Lua code blocks on the Facepunch Garry's Mod Lua subforum with new features like editing, linting, and more!",
   "author": "Zerf",
   "icons": {
