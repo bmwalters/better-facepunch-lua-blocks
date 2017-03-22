@@ -17,6 +17,7 @@
         "bower_components/codemirror/index.js",
         "bower_components/codemirror-addon-lint/index.js",
         "bower_components/codemirror-mode-lua/index.js",
+        "wasm_lua.js",
         "worker_proxy_content.js",
         "script.js"
       ],
@@ -39,6 +40,7 @@
     ]
   },
   "web_accessible_resources": [
+    "wasm_lua.wasm",
     "worker_proxy.html"
   ]
 }

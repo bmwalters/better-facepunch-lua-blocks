@@ -1,3 +1,17 @@
+let runLua
+
+fetch(chrome.runtime.getURL("wasm_lua.wasm"))
+.then((res) => res.arrayBuffer())
+.then((binary) => {
+  let wasmLuaModule = WASMLua({
+    "wasmBinary": binary
+  })
+
+  setTimeout(() => {
+    runLua = wasmLuaModule.cwrap("run_lua", "string", ["string"])
+  }, 0)
+})
+
 let gluaWorker = (function() {
   let resolvers = []
 
@@ -99,6 +113,7 @@ let replacePreWithCodeMirror = function(pre) {
   }, 0)
 
   container.querySelector(".fpcm-prettify-button").addEventListener("click", (e) => {
+    console.log(runLua("return 'hello world'"))
     gluaWorker.prettyPrintString(luaMirror.getValue())
     .then((prettyPrinted) => {
       luaMirror.setValue(prettyPrinted)
